@@ -4,14 +4,23 @@ const PORT = 5000;
 
 const app = express();
 
+// body parser middleware - Express v5 contains bodyParser. Separate npm not reqd.
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: false,
+  })
+);
+
 app.get('/', (req, res) => {
   res.send({
     message: 'Welcome to the Random Ideas API.',
   });
 });
 
+// middleware setup to route to ideas router
 const ideasRouter = require('./routes/ideas');
-app.use('/api/ideas', ideasRouter); // middleware setup to route to ideas router
+app.use('/api/ideas', ideasRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is listening on ${PORT}`);
