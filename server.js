@@ -4,7 +4,8 @@ const PORT = 5000;
 
 const app = express();
 
-// body parser middleware - Express v5 contains bodyParser. Separate npm not reqd.
+// body parser middleware - Express v5 contains bodyParser to extract data from body of api request.
+// Separate npm not reqd.
 app.use(express.json());
 app.use(
   express.urlencoded({
