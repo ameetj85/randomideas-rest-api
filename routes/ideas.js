@@ -69,4 +69,52 @@ router.get('/:id', (req, res) => {
   }
 });
 
+// update idea
+router.put('/:id', (req, res) => {
+  const idea = ideas.find((idea) => idea.id === +req.params.id);
+
+  if (!idea) {
+    res.status(404).json({
+      success: false,
+      error: 'Resource not found',
+    });
+  } else {
+    idea.text = req.body.text || idea.text;
+    idea.tag = req.body.tag || idea.tag;
+
+    res.send({
+      success: true,
+      data: idea,
+    });
+  }
+});
+
+// delete idea
+router.delete('/:id', (req, res) => {
+  const idea = ideas.find((idea) => idea.id === +req.params.id);
+
+  if (!idea) {
+    res.status(404).json({
+      success: false,
+      error: 'Resource not found',
+    });
+  } else {
+    const index = ideas.indexOf(idea);
+    if (index > -1) {
+      ideas.splice(index, 1);
+    } else {
+      console.log('Could not get index of idea for id: ' + req.params.id);
+      res.status(404).json({
+        success: false,
+        error: 'Could not get index of idea for id: ' + req.params.id,
+      });
+    }
+
+    res.send({
+      success: true,
+      data: 'Idea has been deleted.',
+    });
+  }
+});
+
 module.exports = router;
